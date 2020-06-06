@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(DBoW2)
+cmake_policy(SET CMP0042 NEW)
 
 # Set optimized building:
 if(MSVC_IDE)
@@ -7,6 +8,8 @@ if(MSVC_IDE)
 else(MSVC_IDE)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3 -march=native -I/usr/local/Cellar/boost/1.67.0_1/include/boost")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -I/usr/local/Cellar/boost/1.67.0_1/include/boost")
 endif(MSVC_IDE)
 
 set(HDRS_DBOW2

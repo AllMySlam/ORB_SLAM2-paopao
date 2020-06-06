@@ -2,6 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 SET(CMAKE_LEGACY_CYGWIN_WIN32 0)
 
 PROJECT(g2o)
+cmake_policy(SET CMP0042 NEW)
 
 SET(g2o_C_FLAGS)
 SET(g2o_CXX_FLAGS)
@@ -80,6 +81,10 @@ SET(g2o_CXX_FLAGS "${g2o_CXX_FLAGS} -Wall -Wno-deprecated-declarations")
 # specifying compiler flags
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${g2o_CXX_FLAGS}")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${g2o_C_FLAGS}")
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3 -march=native -I/usr/local/Cellar/boost/1.67.0_1/include/boost")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -I/usr/local/Cellar/boost/1.67.0_1/include/boost")
+
 
 # Find Eigen3
 SET(EIGEN3_INCLUDE_DIR ${G2O_EIGEN3_INCLUDE})

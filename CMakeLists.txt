@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(ORB_SLAM2)
+cmake_policy(SET CMP0042 NEW)
 
 IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Release)
@@ -17,7 +18,15 @@ endif( CMAKE_BUILD_TYPE MATCHES "Debug" )
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 2.4.10 REQUIRED)
+#find_package(OpenCV 2.4.10 REQUIRED)
+find_package(OpenCV 3.0 QUIET)
+if(NOT OpenCV_FOUND)
+  find_package(OpenCV 2.4.3 QUIET)
+  if(NOT OpenCV_FOUND)
+    message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
+  endif()
+endif()
+
 find_package(Eigen3 REQUIRED)
 find_package(Pangolin REQUIRED)
 
@@ -56,8 +65,8 @@ target_link_libraries(${PROJECT_NAME}
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
-${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.dylib
+${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.dylib
 )
 
 add_executable(mono_kitti Examples/Monocular/mono_kitti.cc)
@@ -75,4 +84,4 @@ target_link_libraries(rgbd_tum ${PROJECT_NAME})
 # Build tools
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Vocabulary)
 add_executable(bin_vocabulary Vocabulary/bin_vocabulary.cpp)
-target_link_libraries(bin_vocabulary ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so ${OpenCV_LIBS})
+target_link_libraries(bin_vocabulary ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.dylib ${OpenCV_LIBS})

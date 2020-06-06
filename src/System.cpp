@@ -107,8 +107,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
 
     //Initialize the Viewer thread and launch
     mpViewer = new Viewer(this, mpFrameDrawer,mpMapDrawer,mpTracker,strSettingsFile);
-    if(bUseViewer)
-        mptViewer = new thread(&Viewer::Run, mpViewer);
+    //if(bUseViewer)
+        //mptViewer = new thread(&Viewer::Run, mpViewer);
 
     mpTracker->SetViewer(mpViewer);
 
@@ -259,6 +259,11 @@ cv::Mat System::TrackMonocular(const cv::Mat &im, const double &timestamp)
     }
 
     return mpTracker->GrabImageMonocular(im,timestamp);
+}
+
+void System::RunViewer()
+{
+    mpViewer->Run();
 }
 
 void System::ActivateLocalizationMode()
